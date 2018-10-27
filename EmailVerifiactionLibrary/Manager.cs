@@ -52,12 +52,21 @@ namespace EmailVerifiactionLibrary
         public void main()
         {
             FillData();
-
+            bool _flag = true;
             foreach (Email email in _emailList)
             {
-                if (!IsValidEmail(email.EmailAddress))
+                if (_flag)
                 {
-                    email.VerificationStatusId = Enum.VerificationStatus.InvalidFormat;
+                    if (!IsValidEmail(email.EmailAddress))
+                    {
+                        email.VerificationStatusId = Enum.VerificationStatus.InvalidFormat;
+                        _flag = false;
+                    }
+                    if (_flag)
+                    {
+                        //https://www.codeproject.com/Articles/12072/C-NET-DNS-query-component
+                        //https://social.msdn.microsoft.com/Forums/vstudio/en-US/4410b272-0564-485c-9efb-a90857c4bb12/identify-an-email-address-is-existing-or-not?forum=csharpgeneral
+                    }
                 }
             }
         }
