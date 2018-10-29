@@ -14,3 +14,11 @@ H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\Emai
 H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerifiactionLibrary.dll
 H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerifiactionLibrary.pdb
 H:\Software Development\EmailVerification\EmailVerificationTester\obj\Debug\EmailVerificationTester.csprojResolveAssemblyReference.cache
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerificationTester.exe.config
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerificationTester.exe
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerificationTester.pdb
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerifiactionLibrary.dll
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerifiactionLibrary.pdb
+F:\Project\EmailVerification\EmailVerificationTester\obj\Debug\EmailVerificationTester.csprojResolveAssemblyReference.cache
+F:\Project\EmailVerification\EmailVerificationTester\obj\Debug\EmailVerificationTester.exe
+F:\Project\EmailVerification\EmailVerificationTester\obj\Debug\EmailVerificationTester.pdb
