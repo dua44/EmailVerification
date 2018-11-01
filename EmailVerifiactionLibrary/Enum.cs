@@ -13,8 +13,9 @@ namespace EmailVerifiactionLibrary
             Pending = 1,
             InvalidFormat = 2,
             DomainNotExists = 3,
-            EmailNotVerified = 4,
-            EmailVerified = 5
+            MXRecordNotFound = 4,
+            EmailNotVerified = 5,
+            EmailVerified = 6
         }
 
         private enum SMTPResponse : int

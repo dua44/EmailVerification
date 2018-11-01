@@ -22,3 +22,7 @@ F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EmailVerifiaction
 F:\Project\EmailVerification\EmailVerificationTester\obj\Debug\EmailVerificationTester.csprojResolveAssemblyReference.cache
 F:\Project\EmailVerification\EmailVerificationTester\obj\Debug\EmailVerificationTester.exe
 F:\Project\EmailVerification\EmailVerificationTester\obj\Debug\EmailVerificationTester.pdb
+H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\EPPlus.dll
+H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\EPPlus.xml
+H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\LumiSoft.Net.dll
+H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\LumiSoft.Net.xml
