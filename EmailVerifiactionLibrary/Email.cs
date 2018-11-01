@@ -11,5 +11,6 @@ namespace EmailVerifiactionLibrary
         public int Id { get; set; }
         public string EmailAddress { get; set; }
         public EmailVerifiactionLibrary.Enum.VerificationStatus VerificationStatusId { get; set; }
+        public string Verification { get; set; }
     }
 }

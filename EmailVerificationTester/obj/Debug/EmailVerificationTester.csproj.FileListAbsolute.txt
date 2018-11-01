@@ -26,3 +26,7 @@ H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\EPPl
 H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\EPPlus.xml
 H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\LumiSoft.Net.dll
 H:\Software Development\EmailVerification\EmailVerificationTester\bin\Debug\LumiSoft.Net.xml
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EPPlus.dll
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\LumiSoft.Net.dll
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\EPPlus.xml
+F:\Project\EmailVerification\EmailVerificationTester\bin\Debug\LumiSoft.Net.xml

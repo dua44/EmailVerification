@@ -8,13 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EmailVerifiactionLibrary
 {
     public class Manager
-    {                
+    {
         public List<Email> ReadExcelData(string FilePath)
         {
             Email _email;
@@ -32,19 +33,19 @@ namespace EmailVerifiactionLibrary
                     _email.EmailAddress = worksheet.Cells[row, 1].Value.ToString().Trim();
                     _email.Id = row;
                     _email.VerificationStatusId = Enum.VerificationStatus.Pending;
+                    _email.Verification = Enum.VerificationStatus.Pending.ToString();
                     _myemaillist.Add(_email);
                 }
             }
             return _myemaillist;
         }
-        //https://www.codeproject.com/Articles/12072/C-NET-DNS-query-component
-        //https://social.msdn.microsoft.com/Forums/vstudio/en-US/4410b272-0564-485c-9efb-a90857c4bb12/identify-an-email-address-is-existing-or-not?forum=csharpgeneral
+        
         public void StartProcess()
         {
             List<Email> _finalemaillist = new List<Email>();
             List<Email> _emailList = new List<Email>();
             bool _flag = false;
-            _emailList = ReadExcelData(@"C:\Users\rizwanahmad\Downloads\1stLot.xlsx");
+            _emailList = ReadExcelData(@"C:\Users\Rizwan\Downloads\2ndLot.xlsx");
             var _domain = _emailList.Select(x => x.EmailAddress.Split('@').GetValue(1)).Distinct();
 
             foreach (string s in _domain)
@@ -53,11 +54,15 @@ namespace EmailVerifiactionLibrary
                 _flag = IsValidDomain(s);
                 if (!_flag)
                 {
-                    var _invaliddomainemail = _emailList.Where(x => x.EmailAddress.Contains(s)).ToList();
+                    var _invaliddomainemail = _emailList.Where(x => x.EmailAddress.Split('@').GetValue(1).ToString() == s).ToList();
                     foreach (Email e in _invaliddomainemail)
                     {
                         e.VerificationStatusId = Enum.VerificationStatus.DomainNotExists;
-                        _finalemaillist.Add(e);
+                        e.Verification = Enum.VerificationStatus.DomainNotExists.ToString();
+                        if (!_finalemaillist.Any(x => x.EmailAddress == e.EmailAddress))
+                        {
+                            _finalemaillist.Add(e);
+                        }
                     }
                 }
                 else
@@ -65,38 +70,41 @@ namespace EmailVerifiactionLibrary
                     _flag = IsValidMXRecord(s);
                     if (!_flag)
                     {
-                        var _invalidmxrecordemail = _emailList.Where(x => x.EmailAddress.Contains(s)).ToList();
+                        var _invalidmxrecordemail = _emailList.Where(x => x.EmailAddress.Split('@').GetValue(1).ToString() == s).ToList();
                         foreach (Email e in _invalidmxrecordemail)
                         {
                             e.VerificationStatusId = Enum.VerificationStatus.MXRecordNotFound;
-                            _finalemaillist.Add(e);
+                            e.Verification = Enum.VerificationStatus.MXRecordNotFound.ToString();
+                            if (!_finalemaillist.Any(x => x.EmailAddress == e.EmailAddress))
+                            {
+                                _finalemaillist.Add(e);
+                            }
                         }
                     }
                     else
                     {
-                        var _formatemail = _emailList.Where(x => x.EmailAddress.Contains(s)).ToList();
+                        var _formatemail = _emailList.Where(x => x.EmailAddress.Split('@').GetValue(1).ToString() == s).ToList();
                         foreach (Email e in _formatemail)
                         {
                             if (IsValidEmail(e.EmailAddress))
                             {
                                 e.VerificationStatusId = Enum.VerificationStatus.EmailVerified;
+                                e.Verification = Enum.VerificationStatus.EmailVerified.ToString();
                             }
                             else
                             {
                                 e.VerificationStatusId = Enum.VerificationStatus.InvalidFormat;
+                                e.Verification = Enum.VerificationStatus.InvalidFormat.ToString();
                             }
-                            _finalemaillist.Add(e);
+                            if (!_finalemaillist.Any(x => x.EmailAddress == e.EmailAddress))
+                            {
+                                _finalemaillist.Add(e);
+                            }
                         }
                     }
                 }
             }
-
-            foreach (Email email in _finalemaillist)
-            {
-                Console.Write("Id : " + email.Id + " Email : " + email.EmailAddress + " Verification Status : " + email.VerificationStatusId + "\n\r");
-            }
-            Console.Read();
-            
+            SaveToExcel(_finalemaillist);
         }
         public bool IsValidEmail(string _email)
         {
@@ -146,7 +154,7 @@ namespace EmailVerifiactionLibrary
             {
                 return false;
             }
-        }        
+        }
         public void ActionResult(string e)
         {
             TcpClient tClient = new TcpClient("gmail-smtp-in.l.google.com", 25);
@@ -188,92 +196,54 @@ namespace EmailVerifiactionLibrary
         {
             return int.Parse(ResponseString.Substring(0, 3));
         }
-        public static string SaveToExcel(DataTable dt, string FileName, int AgentCode, int DataCategoryId, int DataGenerationRequestId)
+        public static string SaveToExcel(List<Email> _emailList)
         {
-
-
+            DataTable dt = ToDataTable<Email>(_emailList);
             /*Set up work book, work sheets, and excel application*/
             string pathfordb = string.Empty;
             /*Set up work book, work sheets, and excel application*/
             //Microsoft.Office.Interop.Excel.Application oexcel = new Microsoft.Office.Interop.Excel.Application();
             try
             {
-                if (dt == null || dt.Rows.Count == 0)
-                {
-                    dt.Columns.Add("Message");
-                    dt.Rows.Add("No Records Found!");
-                }
-                DataColumnCollection columns = dt.Columns;
-                if (DataCategoryId == Convert.ToInt32(Constants.DataCategory.UpSell))
-                {
-                    if (columns.Contains("Email_Address"))
-                        dt.Columns.Remove("Email_Address");
-                    if (columns.Contains("Email"))
-                        dt.Columns.Remove("Email");
-                    if (columns.Contains("Phone_Number"))
-                        dt.Columns.Remove("Phone_Number");
-                }
-                if (DataCategoryId == Convert.ToInt32(Constants.DataCategory.Email))
-                {
-                    if (columns.Contains("Phone_Number"))
-                        dt.Columns.Remove("Phone_Number");
-                }
-                if (DataCategoryId == Convert.ToInt32(Constants.DataCategory.Sms))
-                {
-                    if (columns.Contains("Email_Address"))
-                        dt.Columns.Remove("Email_Address");
-                    if (columns.Contains("Email"))
-                        dt.Columns.Remove("Email");
-                }
-
-                // object misValue = System.Reflection.Missing.Value;
-                //Microsoft.Office.Interop.Excel.Workbook obook = oexcel.Workbooks.Add();
-                //Microsoft.Office.Interop.Excel.Worksheet osheet = new Microsoft.Office.Interop.Excel.Worksheet();
-                //  obook.Worksheets.Add(misValue);
-                //osheet = (Microsoft.Office.Interop.Excel.Worksheet)obook.Sheets["Sheet1"];
-                //int colIndex = 0;
-                //int rowIndex = 1;
-                //foreach (DataColumn dc in dt.Columns)
-                //{
-                //    colIndex++;
-                //    osheet.Cells[1, colIndex] = dc.ColumnName;
-                //}
-                //foreach (DataRow dr in dt.Rows)
-                //{
-                //    rowIndex++;
-                //    colIndex = 0;
-
-                //    foreach (DataColumn dc in dt.Columns)
-                //    {
-                //        colIndex++;
-                //        osheet.Cells[rowIndex, colIndex] = dr[dc.ColumnName];
-                //    }
-                //}
-                //osheet.Columns.AutoFit();
-                clsGeneral objclsgeneral = new DataGenerationLibrary.clsGeneral();
-                DataSet dsData = new DataSet();
-                string targetFolder = ConfigurationManager.AppSettings["DataFolderName"].ToString();
-                string path = AppDomain.CurrentDomain.BaseDirectory + targetFolder + "\\" + AgentCode + "\\";
-                pathfordb = targetFolder + "\\" + AgentCode + "\\" + FileName + ".xlsx";
-                if (!Directory.Exists(path)) { Directory.CreateDirectory(path); }
-                string filepath = path + FileName + ".xlsx";
+                DataColumnCollection columns = dt.Columns;                
+                clsGeneral objclsgeneral = new clsGeneral();
+                DataSet dsData = new DataSet();                                
+                string filepath = @"C:\Users\Rizwan\Downloads\2ndLot-Generated.xlsx";
                 DataTable _NewDataTable = dt.Copy();
                 dsData.Tables.Add(_NewDataTable);
-                objclsgeneral.GenerateExcel2007(filepath, dsData);
-                //Release and terminate excel
-                //obook.SaveAs(filepath);
-                //obook.Close();
-                //oexcel.Quit();
-                //GC.Collect();
+                objclsgeneral.GenerateExcel2007(filepath, dsData);                                
             }
             catch (Exception ex)
-            {
-                //oexcel.Quit();
-                Logging.WriteToLog(Logging.GenerateDefaultLogFileName("DataGenerationService"), "Error While Putting Data in Excel >> MethodName=SaveToExcel >> DataGenerationRequestId=" + DataGenerationRequestId + ">> Exception =" + ex.Message);
-                Methods.UpdateDataRequestStatus(Convert.ToInt32(Constants.ServiceStatus.Error), DataGenerationRequestId);
+            {                
                 pathfordb = string.Empty;
             }
             return pathfordb;
+        }
+        public static DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Defining type of data column gives proper data table 
+                var type = (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? Nullable.GetUnderlyingType(prop.PropertyType) : prop.PropertyType);
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name, type);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
         }
     }
 }

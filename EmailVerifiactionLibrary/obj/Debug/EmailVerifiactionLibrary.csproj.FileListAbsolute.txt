@@ -6,7 +6,6 @@ F:\Project\EmailVerification\EmailVerifiactionLibrary\bin\Debug\EmailVerifiactio
 F:\Project\EmailVerification\EmailVerifiactionLibrary\bin\Debug\EmailVerifiactionLibrary.pdb
 F:\Project\EmailVerification\EmailVerifiactionLibrary\obj\Debug\EmailVerifiactionLibrary.dll
 F:\Project\EmailVerification\EmailVerifiactionLibrary\obj\Debug\EmailVerifiactionLibrary.pdb
-F:\Project\EmailVerification\EmailVerifiactionLibrary\obj\Debug\EmailVerifiactionLibrary.csprojResolveAssemblyReference.cache
 H:\Software Development\EmailVerification\EmailVerifiactionLibrary\bin\Debug\EmailVerifiactionLibrary.dll
 H:\Software Development\EmailVerification\EmailVerifiactionLibrary\bin\Debug\EmailVerifiactionLibrary.pdb
 H:\Software Development\EmailVerification\EmailVerifiactionLibrary\obj\Debug\EmailVerifiactionLibrary.dll
@@ -16,3 +15,7 @@ H:\Software Development\EmailVerification\EmailVerifiactionLibrary\bin\Debug\EPP
 H:\Software Development\EmailVerification\EmailVerifiactionLibrary\bin\Debug\LumiSoft.Net.dll
 H:\Software Development\EmailVerification\EmailVerifiactionLibrary\bin\Debug\LumiSoft.Net.xml
 H:\Software Development\EmailVerification\EmailVerifiactionLibrary\obj\Debug\EmailVerifiactionLibrary.csprojResolveAssemblyReference.cache
+F:\Project\EmailVerification\EmailVerifiactionLibrary\bin\Debug\EPPlus.dll
+F:\Project\EmailVerification\EmailVerifiactionLibrary\bin\Debug\LumiSoft.Net.dll
+F:\Project\EmailVerification\EmailVerifiactionLibrary\bin\Debug\EPPlus.xml
+F:\Project\EmailVerification\EmailVerifiactionLibrary\bin\Debug\LumiSoft.Net.xml
