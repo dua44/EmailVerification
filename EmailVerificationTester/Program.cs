@@ -11,7 +11,7 @@ namespace EmailVerificationTester
         static void Main(string[] args)
         {
             EmailVerifiactionLibrary.Manager _Manager = new EmailVerifiactionLibrary.Manager();
-            _Manager.StartProcess(); 
+            _Manager.StartProcess("5th Lot.xlsx"); 
         }
     }
 }
